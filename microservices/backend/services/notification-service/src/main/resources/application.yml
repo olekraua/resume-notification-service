@@ -1,0 +1,31 @@
+server:
+  port: 8085
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: resume-notification-service
+  mail:
+    host: ${SPRING_MAIL_HOST:}
+    port: ${SPRING_MAIL_PORT:}
+    username: ${SMTP_USER:}
+    password: ${SMTP_PASS:}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+
+app:
+  notification:
+    messaging:
+      enabled: true
+      max-attempts: ${NOTIFICATION_RETRY_MAX:5}
+      retry-delay-ms: ${NOTIFICATION_RETRY_DELAY_MS:30000}
