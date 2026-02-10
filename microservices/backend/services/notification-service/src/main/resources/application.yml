@@ -9,12 +9,12 @@ spring:
     host: ${SPRING_MAIL_HOST:}
     port: ${SPRING_MAIL_PORT:}
     username: ${SMTP_USER:}
-    password: ${SMTP_PASS:}
+    password: ${SMTP_PASS}
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
     port: ${RABBITMQ_PORT:5672}
     username: ${RABBITMQ_USER:guest}
-    password: ${RABBITMQ_PASS:guest}
+    password: ${RABBITMQ_PASS}
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
