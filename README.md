@@ -1,22 +1,15 @@
-# notification-service
+# resume-notification-service
 
-Standalone repository for the notification-service microservice.
+Single-service repository for `microservices/backend/services/notification-service`.
 
-## Local build
+## Build
+`./mvnw -pl microservices/backend/services/notification-service -am -DskipTests package`
 
-```bash
-./mvnw -pl microservices/backend/services/notification-service -am -Dmaven.test.skip=true package
-```
+## Run
+`./mvnw -pl microservices/backend/services/notification-service -am spring-boot:run`
 
-## Local run
+## Shared libraries
+This service depends on artifacts from `resume-platform-libs`.
 
-```bash
-./mvnw -pl microservices/backend/services/notification-service -am spring-boot:run
-```
-
-## Included modules
-
-- shared
-- notification
-- microservices/backend/services/notification-service
-
+Install/update shared libraries before building service repos:
+`cd ../resume-platform-libs && ./mvnw -DskipTests install`
