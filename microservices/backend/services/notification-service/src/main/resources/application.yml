@@ -10,11 +10,16 @@ spring:
     port: ${SPRING_MAIL_PORT:}
     username: ${SMTP_USER:}
     password: ${SMTP_PASS}
-  rabbitmq:
-    host: ${RABBITMQ_HOST:localhost}
-    port: ${RABBITMQ_PORT:5672}
-    username: ${RABBITMQ_USER:guest}
-    password: ${RABBITMQ_PASS}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
@@ -27,5 +32,14 @@ app:
   notification:
     messaging:
       enabled: true
-      max-attempts: ${NOTIFICATION_RETRY_MAX:5}
-      retry-delay-ms: ${NOTIFICATION_RETRY_DELAY_MS:30000}
+      consumer-group: ${APP_NOTIFICATION_CONSUMER_GROUP:resume-notification-mail}
+      kafka:
+        topic-restore-access-mail: ${APP_NOTIFICATION_TOPIC_RESTORE_ACCESS_MAIL:resume.auth.restore-access-mail}
+      retry:
+        max-attempts: ${NOTIFICATION_RETRY_MAX:5}
+        initial-delay-ms: ${NOTIFICATION_RETRY_INITIAL_DELAY_MS:1000}
+        max-delay-ms: ${NOTIFICATION_RETRY_DELAY_MS:30000}
+        multiplier: ${NOTIFICATION_RETRY_MULTIPLIER:2.0}
+      idempotency:
+        max-size: ${APP_NOTIFICATION_IDEMPOTENCY_CACHE_MAX_SIZE:200000}
+        ttl: ${APP_NOTIFICATION_IDEMPOTENCY_CACHE_TTL:PT24H}
