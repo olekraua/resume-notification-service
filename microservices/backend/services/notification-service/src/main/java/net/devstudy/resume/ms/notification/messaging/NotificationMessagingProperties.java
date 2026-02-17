@@ -93,8 +93,17 @@ public class NotificationMessagingProperties {
     }
 
     public static class Idempotency {
+        private boolean enabled = true;
         private long maxSize = 200000L;
         private Duration ttl = Duration.ofHours(24);
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
 
         public long getMaxSize() {
             return maxSize;

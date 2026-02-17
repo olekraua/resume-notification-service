@@ -29,6 +29,20 @@ spring:
       - org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
 
 app:
+  platform:
+    middleware:
+      timeout:
+        enabled: ${APP_PLATFORM_TIMEOUT_ENABLED:true}
+      retry:
+        enabled: ${APP_PLATFORM_RETRY_ENABLED:true}
+      circuit:
+        enabled: ${APP_PLATFORM_CIRCUIT_ENABLED:true}
+      idempotency:
+        enabled: ${APP_PLATFORM_IDEMPOTENCY_ENABLED:true}
+      telemetry:
+        enabled: ${APP_PLATFORM_TELEMETRY_ENABLED:true}
+        request-id-header: ${APP_PLATFORM_REQUEST_ID_HEADER:X-Request-Id}
+        trace-id-header: ${APP_PLATFORM_TRACE_ID_HEADER:X-Trace-Id}
   notification:
     messaging:
       enabled: true
@@ -41,5 +55,6 @@ app:
         max-delay-ms: ${NOTIFICATION_RETRY_DELAY_MS:30000}
         multiplier: ${NOTIFICATION_RETRY_MULTIPLIER:2.0}
       idempotency:
+        enabled: ${APP_NOTIFICATION_IDEMPOTENCY_ENABLED:true}
         max-size: ${APP_NOTIFICATION_IDEMPOTENCY_CACHE_MAX_SIZE:200000}
         ttl: ${APP_NOTIFICATION_IDEMPOTENCY_CACHE_TTL:PT24H}
